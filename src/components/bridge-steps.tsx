@@ -1,17 +1,18 @@
-const steps = [
-  { title: "Tell us about yourself", detail: "Answer a short, simple questionnaire." },
-  { title: "Find matching schemes", detail: "See schemes that may fit your situation." },
-  { title: "Understand eligibility", detail: "See exactly why a scheme matches you." },
-  { title: "Prepare documents", detail: "Know what you'll need before you apply." },
-  { title: "Apply on official portal", detail: "We hand you off to the government site." },
-];
+import { useTranslations } from "next-intl";
 
 /**
  * Renders the 5-step journey as a bridge span: each step is a pillar,
  * connected by a shallow arc — the visual signature tying "Setu" (bridge)
  * into the product's most important flow. Used once, deliberately.
+ *
+ * Step content is stored as a raw array in messages/*.json (t.raw("steps"))
+ * rather than flat keys, since next-intl doesn't have a first-class way to
+ * translate a variable-length list of {title, detail} objects otherwise.
  */
 export function BridgeSteps() {
+  const t = useTranslations("BridgeSteps");
+  const steps = t.raw("steps") as { title: string; detail: string }[];
+
   const n = steps.length;
   const width = 1000;
   const nodeY = 40;
@@ -57,7 +58,7 @@ export function BridgeSteps() {
         {steps.map((step, i) => (
           <li key={step.title} className="text-center sm:text-left">
             <span className="text-xs font-semibold text-[var(--color-saffron)]">
-              Step {i + 1}
+              {t("stepLabel", { number: i + 1 })}
             </span>
             <p className="font-[family-name:var(--font-display)] font-semibold text-[var(--color-navy)] mt-1">
               {step.title}

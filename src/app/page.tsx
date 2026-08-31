@@ -1,10 +1,5 @@
 import Link from "next/link";
 import {
-  GraduationCap,
-  Briefcase,
-  Sprout,
-  HeartPulse,
-  Home as HomeIcon,
   Search,
   Languages,
   ShieldCheck,
@@ -12,16 +7,18 @@ import {
 } from "lucide-react";
 import { BridgeSteps } from "@/components/bridge-steps";
 import { CategoryCard } from "@/components/scheme/category-card";
+import { getCategories } from "@/lib/data/schemes";
+import { getCategoryIcon } from "@/lib/icon-map";
 
-const categories = [
-  { slug: "education", name: "Education", description: "Scholarships, fee support, and learning aid.", icon: GraduationCap, schemeCount: 6 },
-  { slug: "employment", name: "Employment & Skills", description: "Job schemes, training, and self-employment support.", icon: Briefcase, schemeCount: 4 },
-  { slug: "agriculture", name: "Agriculture", description: "Support for farmers, crops, and irrigation.", icon: Sprout, schemeCount: 5 },
-  { slug: "healthcare", name: "Healthcare", description: "Health insurance and treatment support.", icon: HeartPulse, schemeCount: 3 },
-  { slug: "housing", name: "Housing", description: "Affordable housing and construction support.", icon: HomeIcon, schemeCount: 3 },
-];
+export const revalidate = 300; // ISR: schemes/categories change rarely, avoid a DB hit on every request
 
-export default function HomePage() {
+export default async function HomePage() {
+  const allCategories = await getCategories();
+  // Show the 5 with the most schemes first, so real content leads.
+  const categories = [...allCategories]
+    .sort((a, b) => b._count.schemes - a._count.schemes)
+    .slice(0, 5);
+
   return (
     <>
       {/* Hero */}
@@ -41,6 +38,8 @@ export default function HomePage() {
           {/* Search */}
           <form
             role="search"
+            action="/schemes"
+            method="GET"
             className="mt-8 max-w-xl mx-auto flex items-center gap-2 rounded-lg border border-[var(--color-border)] bg-white p-1.5 shadow-sm"
           >
             <Search size={18} className="ml-2 text-[var(--color-muted)]" aria-hidden="true" />
@@ -49,6 +48,7 @@ export default function HomePage() {
             </label>
             <input
               id="scheme-search"
+              name="q"
               type="search"
               placeholder="Search government schemes..."
               className="flex-1 bg-transparent px-1 py-2 text-sm outline-none"
@@ -62,13 +62,18 @@ export default function HomePage() {
           </form>
 
           <div className="mt-6 flex flex-wrap justify-center gap-2">
-            {["Education", "Employment", "Healthcare", "Housing"].map((tag) => (
+            {[
+              { label: "Education", slug: "education" },
+              { label: "Employment", slug: "employment-skills" },
+              { label: "Healthcare", slug: "healthcare" },
+              { label: "Housing", slug: "housing" },
+            ].map((tag) => (
               <Link
-                key={tag}
-                href={`/schemes?category=${tag.toLowerCase()}`}
+                key={tag.slug}
+                href={`/schemes?category=${tag.slug}`}
                 className="text-xs font-medium px-3 py-1.5 rounded-full border border-[var(--color-border)] bg-white hover:border-[var(--color-navy)] transition-colors"
               >
-                {tag}
+                {tag.label}
               </Link>
             ))}
           </div>
@@ -103,7 +108,14 @@ export default function HomePage() {
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
             {categories.map((c) => (
-              <CategoryCard key={c.slug} {...c} />
+              <CategoryCard
+                key={c.slug}
+                slug={c.slug}
+                name={c.name}
+                description={c.description}
+                icon={getCategoryIcon(c.icon)}
+                schemeCount={c._count.schemes}
+              />
             ))}
           </div>
         </div>

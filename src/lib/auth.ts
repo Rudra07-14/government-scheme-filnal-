@@ -19,6 +19,26 @@ export async function getCurrentAppUser() {
   return db.user.findUnique({ where: { id: userId } });
 }
 
+/**
+ * Like getCurrentAppUser, but creates the row if it's missing instead of
+ * returning null. This covers local development, where the Clerk webhook
+ * (see app/api/webhooks/clerk/route.ts) typically isn't wired up yet since
+ * it needs a public HTTPS endpoint — so a citizen can be signed in via
+ * Clerk without our `users` row existing. Any action that writes data tied
+ * to a user (e.g. saving a scheme) must not fail just because the webhook
+ * hasn't caught up yet.
+ */
+export async function getOrCreateAppUser() {
+  const { userId } = await auth();
+  if (!userId) return null;
+
+  return db.user.upsert({
+    where: { id: userId },
+    update: {},
+    create: { id: userId },
+  });
+}
+
 export async function requireAdmin() {
   const user = await getCurrentAppUser();
   if (!user || user.role !== "admin") {

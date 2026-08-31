@@ -1,20 +1,30 @@
-import Link from "next/link";
 import {
   SignedIn,
   SignedOut,
   SignInButton,
   UserButton,
 } from "@clerk/nextjs";
+import { getTranslations } from "next-intl/server";
 import { Landmark, Menu } from "lucide-react";
+import NextLink from "next/link";
+import { Link } from "@/i18n/navigation";
+import { getCurrentAppUser } from "@/lib/auth";
+import { LocaleSwitcher } from "@/components/locale-switcher";
 
-const navLinks = [
-  { href: "/schemes", label: "Schemes" },
-  { href: "/find-schemes", label: "Find Schemes" },
-  { href: "/categories", label: "Categories" },
-  { href: "/about", label: "About" },
-];
+export async function Navbar() {
+  const [appUser, t] = await Promise.all([
+    getCurrentAppUser(),
+    getTranslations("Navbar"),
+  ]);
+  const isAdmin = appUser?.role === "admin";
 
-export function Navbar() {
+  const navLinks = [
+    { href: "/schemes", label: t("schemes") },
+    { href: "/find-schemes", label: t("findSchemes") },
+    { href: "/categories", label: t("categories") },
+    { href: "/about", label: t("about") },
+  ];
+
   return (
     <header className="sticky top-0 z-40 border-b border-[var(--color-border)] bg-[var(--color-paper)]/95 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
@@ -37,26 +47,26 @@ export function Navbar() {
               {link.label}
             </Link>
           ))}
+          {isAdmin && (
+            // Plain next/link, deliberately not the locale-aware Link: /admin
+            // lives outside the [locale] segment (see proxy.ts), so it must
+            // never get a locale prefix like /hi/admin.
+            <NextLink
+              href="/admin"
+              className="px-3 py-2 text-sm font-medium text-[var(--color-saffron)] rounded-md hover:bg-black/5 transition-colors"
+            >
+              {t("admin")}
+            </NextLink>
+          )}
         </nav>
 
         <div className="hidden md:flex items-center gap-3">
-          <label htmlFor="lang-select" className="sr-only">
-            Select language
-          </label>
-          <select
-            id="lang-select"
-            className="text-sm border border-[var(--color-border)] rounded-md px-2 py-1.5 bg-white"
-            defaultValue="en"
-          >
-            <option value="en">English</option>
-            <option value="hi">हिंदी</option>
-            <option value="mr">मराठी</option>
-          </select>
+          <LocaleSwitcher />
 
           <SignedOut>
             <SignInButton mode="modal">
               <button className="px-4 py-2 text-sm font-semibold text-white bg-[var(--color-navy)] rounded-md hover:bg-[var(--color-navy-light)] transition-colors">
-                Login
+                {t("login")}
               </button>
             </SignInButton>
           </SignedOut>
@@ -65,7 +75,7 @@ export function Navbar() {
               href="/profile"
               className="text-sm font-medium text-[var(--color-ink)] hover:underline"
             >
-              Profile
+              {t("profile")}
             </Link>
             <UserButton />
           </SignedIn>

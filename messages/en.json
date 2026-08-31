@@ -1,0 +1,203 @@
+{
+  "Navbar": {
+    "schemes": "Schemes",
+    "findSchemes": "Find Schemes",
+    "categories": "Categories",
+    "about": "About",
+    "admin": "Admin",
+    "login": "Login",
+    "profile": "Profile",
+    "selectLanguage": "Select language"
+  },
+  "Language": {
+    "en": "English",
+    "hi": "हिंदी",
+    "mr": "मराठी"
+  },
+  "Footer": {
+    "tagline": "A bridge to government schemes.",
+    "explore": "Explore",
+    "browseSchemes": "Browse Schemes",
+    "findSchemes": "Find Schemes For Me",
+    "categories": "Categories",
+    "about": "About",
+    "officialResources": "Official Resources",
+    "disclaimer": "Yojana Setu is an educational/community project and is not an official Government of India or State Government portal. Scheme information is provided for guidance. Final eligibility, approval, and application decisions are determined by the concerned government authority."
+  },
+  "BridgeSteps": {
+    "steps": [
+      {
+        "title": "Tell us about yourself",
+        "detail": "Answer a short, simple questionnaire."
+      },
+      {
+        "title": "Find matching schemes",
+        "detail": "See schemes that may fit your situation."
+      },
+      {
+        "title": "Understand eligibility",
+        "detail": "See exactly why a scheme matches you."
+      },
+      {
+        "title": "Prepare documents",
+        "detail": "Know what you'll need before you apply."
+      },
+      {
+        "title": "Apply on official portal",
+        "detail": "We hand you off to the government site."
+      }
+    ],
+    "stepLabel": "Step {number}"
+  },
+  "HomePage": {
+    "badge": "Not an official government portal — a guide to one",
+    "title": "Government Schemes, Made Simple.",
+    "subtitle": "Discover government schemes, understand eligibility, prepare the required documents, and reach the official application portal.",
+    "searchPlaceholder": "Search government schemes...",
+    "searchAriaLabel": "Search government schemes",
+    "searchButton": "Search",
+    "tagEducation": "Education",
+    "tagEmployment": "Employment",
+    "tagHealthcare": "Healthcare",
+    "tagHousing": "Housing",
+    "popularCategories": "Popular Categories",
+    "viewAll": "View all",
+    "howItWorks": "How Yojana Setu Works",
+    "ctaFindSchemes": "Find Schemes for Me",
+    "ctaBrowseSchemes": "Browse Schemes",
+    "whyUsTitle": "Why Use Yojana Setu?",
+    "why1Title": "Clear, explainable matches",
+    "why1Body": "Every recommendation shows exactly why it matched — and why one didn't.",
+    "why2Title": "Verified information",
+    "why2Body": "Every scheme links back to its official government source.",
+    "why3Title": "Available in your language",
+    "why3Body": "English, Hindi, and Marathi — built for accessibility from the start."
+  },
+  "SchemesPage": {
+    "title": "Browse Government Schemes",
+    "count": "{count, plural, one {# scheme} other {# schemes}} available",
+    "searchLabel": "Search schemes",
+    "searchPlaceholder": "Search schemes...",
+    "category": "Category",
+    "allCategories": "All Categories",
+    "applyFilters": "Apply Filters",
+    "clearFilters": "Clear all filters",
+    "noResultsTitle": "No schemes match your search.",
+    "noResultsBody": "Try a different keyword or clear your filters.",
+    "browseAll": "Browse All Schemes",
+    "filtersLabel": "Filters",
+    "allCategoriesRadio": "All categories",
+    "stateLabel": "State",
+    "allStatesOrCentral": "All states / Central",
+    "governmentLevel": "Government Level",
+    "govLevelAll": "All",
+    "govLevelCentral": "Central",
+    "govLevelState": "State"
+  },
+  "SchemeDetail": {
+    "centralGovernment": "Central Government",
+    "verificationRequired": "Verification Required",
+    "visitPortal": "Visit Official Application Portal",
+    "overview": "Overview",
+    "benefits": "Benefits",
+    "eligibility": "Eligibility",
+    "eligibilityUnknown": "Detailed eligibility criteria for this scheme are being verified. Please check the official source below.",
+    "subjectToVerification": "(subject to verification)",
+    "findSchemesHint": "Use <link>Find Schemes For Me</link> to check your personal match against these criteria.",
+    "findSchemesLink": "Find Schemes For Me",
+    "documentsRequired": "Documents Required",
+    "howToApply": "How to Apply",
+    "officialSource": "Official source",
+    "lastVerified": "Last verified",
+    "disclaimer": "Yojana Setu is not an official Government of India or State Government portal. Final eligibility, approval, and application decisions are determined by the concerned government authority."
+  },
+  "CategoriesPage": {
+    "title": "Browse Categories",
+    "count": "{count, plural, one {# category} other {# categories}} of government schemes"
+  },
+  "CategoryDetail": {
+    "back": "All Categories",
+    "count": "{count, plural, one {# scheme} other {# schemes}} in this category",
+    "noResultsTitle": "No schemes in this category yet.",
+    "noResultsBody": "Check back soon, or browse all schemes instead.",
+    "browseAll": "Browse All Schemes"
+  },
+  "FindSchemes": {
+    "title": "Find Schemes For Me",
+    "subtitle": "Answer a few quick questions and we will check your eligibility against every scheme in our database."
+  },
+  "MatchResults": {
+    "noneFound": "No matching schemes found",
+    "someFound": "{count, plural, one {# scheme} other {# schemes}} may match you",
+    "checkedAgainst": "Checked against {count, plural, one {# scheme} other {# schemes}} in our database. This is a matching estimate, not an official eligibility decision.",
+    "editAnswers": "Edit Answers",
+    "emptyTitle": "We could not find a clear match right now.",
+    "emptyBody": "Try adjusting your answers, or browse all schemes directly — some may still be relevant even without an exact match.",
+    "browseAll": "Browse All Schemes",
+    "central": "Central",
+    "state": "State",
+    "likelyMatch": "Likely Match",
+    "needsVerification": "Needs Verification",
+    "whyMatches": "Why this matches you",
+    "softFlags": "{count, plural, one {# detail needs} other {# details need}} verification with the department.",
+    "viewDetails": "View details →",
+    "matchScore": "Match score: {score}%",
+    "footnote": "Yojana Setu's matching score is a guide based on the answers you gave — it is not an official eligibility determination. Final eligibility is decided by the concerned government department when you apply."
+  },
+  "Profile": {
+    "administrator": "Administrator",
+    "citizen": "Citizen",
+    "accountSuffix": "account",
+    "memberSince": "Member since {date}",
+    "languageEnglish": "English",
+    "languageHindi": "हिंदी (Hindi)",
+    "languageMarathi": "मराठी (Marathi)",
+    "savedSchemes": "Saved Schemes",
+    "savedCount": "{count, plural, one {# saved} other {# saved}}",
+    "emptyTitle": "You have not saved any schemes yet.",
+    "emptyBody": "Browse schemes or run the questionnaire to find ones worth saving for later.",
+    "findSchemes": "Find Schemes For Me",
+    "browseAll": "Browse All Schemes"
+  },
+  "SaveScheme": {
+    "save": "Save Scheme",
+    "saved": "Saved",
+    "saveAriaLabel": "Save {name}",
+    "unsaveAriaLabel": "Unsave {name}"
+  },
+  "SchemeCard": {
+    "central": "Central",
+    "viewDetails": "View details →",
+    "state": "State"
+  },
+  "CategoryCard": {
+    "schemeCount": "{count, plural, one {# scheme} other {# schemes}}"
+  },
+  "Feedback": {
+    "prompt": "Was this information helpful?",
+    "yes": "Yes",
+    "no": "No",
+    "commentPlaceholder": "Add a comment (optional)",
+    "submit": "Submit Feedback",
+    "submitting": "Submitting...",
+    "thanks": "Thanks for your feedback.",
+    "genericError": "Something went wrong. Please try again."
+  },
+  "Report": {
+    "trigger": "Report incorrect information",
+    "heading": "What is wrong with this scheme?",
+    "categoryEligibility": "Eligibility criteria are wrong",
+    "categoryBenefit": "Benefit amount or details are wrong",
+    "categoryBrokenLink": "Official link is broken",
+    "categoryInactive": "Scheme is no longer active",
+    "categoryDocument": "Required documents are wrong",
+    "categoryOther": "Something else",
+    "detailPlaceholder": "Additional details (optional)",
+    "selectCategoryError": "Please select what is wrong.",
+    "submit": "Submit Report",
+    "submitting": "Submitting...",
+    "cancel": "Cancel",
+    "thanks": "Thanks — we will look into this.",
+    "genericError": "Something went wrong. Please try again."
+  }
+}

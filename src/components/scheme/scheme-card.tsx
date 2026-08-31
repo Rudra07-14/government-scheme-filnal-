@@ -1,23 +1,32 @@
-import Link from "next/link";
-import { Heart } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
+import { SaveSchemeButton } from "@/components/scheme/save-scheme-button";
 
 interface SchemeCardProps {
+  id: string;
   slug: string;
   name: string;
   description: string;
   category: string;
   govLevel: "central" | "state";
   state?: string | null;
+  initialSaved?: boolean;
+  onToggled?: (saved: boolean) => void;
 }
 
 export function SchemeCard({
+  id,
   slug,
   name,
   description,
   category,
   govLevel,
   state,
+  initialSaved = false,
+  onToggled,
 }: SchemeCardProps) {
+  const t = useTranslations("SchemeCard");
+
   return (
     <div className="flex flex-col gap-3 rounded-lg border border-[var(--color-border)] bg-white p-5">
       <div className="flex items-start justify-between gap-2">
@@ -26,16 +35,16 @@ export function SchemeCard({
             {category}
           </span>
           <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-black/5 text-[var(--color-muted)]">
-            {govLevel === "central" ? "Central" : state ?? "State"}
+            {govLevel === "central" ? t("central") : state ?? t("state")}
           </span>
         </div>
-        <button
-          type="button"
-          aria-label={`Save ${name}`}
-          className="text-[var(--color-muted)] hover:text-[var(--color-saffron)] transition-colors"
-        >
-          <Heart size={18} aria-hidden="true" />
-        </button>
+        <SaveSchemeButton
+          schemeId={id}
+          schemeName={name}
+          initialSaved={initialSaved}
+          variant="icon"
+          onToggled={onToggled}
+        />
       </div>
 
       <Link href={`/schemes/${slug}`} className="group">
@@ -51,7 +60,7 @@ export function SchemeCard({
         href={`/schemes/${slug}`}
         className="text-sm font-semibold text-[var(--color-navy)] hover:underline mt-auto"
       >
-        View details →
+        {t("viewDetails")}
       </Link>
     </div>
   );

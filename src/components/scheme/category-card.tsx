@@ -1,5 +1,6 @@
-import Link from "next/link";
+import { useTranslations } from "next-intl";
 import type { LucideIcon } from "lucide-react";
+import { Link } from "@/i18n/navigation";
 
 interface CategoryCardProps {
   slug: string;
@@ -16,6 +17,8 @@ export function CategoryCard({
   icon: Icon,
   schemeCount,
 }: CategoryCardProps) {
+  const t = useTranslations("CategoryCard");
+
   return (
     <Link
       href={`/categories/${slug}`}
@@ -31,7 +34,7 @@ export function CategoryCard({
         <p className="text-sm text-[var(--color-muted)] mt-1">{description}</p>
       </div>
       <span className="text-xs font-medium text-[var(--color-navy)] mt-auto">
-        {schemeCount} scheme{schemeCount === 1 ? "" : "s"}
+        {t("schemeCount", { count: schemeCount })}
       </span>
     </Link>
   );
