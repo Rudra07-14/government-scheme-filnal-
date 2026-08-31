@@ -1,0 +1,135 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id           String        @id // Clerk userId
+  username     String?
+  language     String        @default("en") // en | hi | mr
+  role         String        @default("citizen") // citizen | admin
+  createdAt    DateTime      @default(now()) @map("created_at")
+  savedSchemes SavedScheme[]
+  feedback     Feedback[]
+  reports      Report[]
+
+  @@map("users")
+}
+
+model Category {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  name        String
+  description String
+  icon        String // lucide-react icon name
+  schemes     Scheme[]
+
+  @@map("categories")
+}
+
+model Scheme {
+  id                String             @id @default(cuid())
+  slug              String             @unique
+  name              String
+  description       String
+  overview          String
+  benefits          String
+  govLevel          String             @map("gov_level") // central | state
+  state             String? // null = central / all-India
+  department        String
+  status            String             @default("active") // active | verification_required | inactive | archived
+  officialSourceUrl String             @map("official_source_url")
+  applyUrl          String             @map("apply_url")
+  lastVerifiedAt    DateTime?          @map("last_verified_at")
+  categoryId        String             @map("category_id")
+  category          Category           @relation(fields: [categoryId], references: [id])
+  eligibilityRules  EligibilityRule[]
+  documents         SchemeDocument[]
+  applicationSteps  ApplicationStep[]
+  savedBy           SavedScheme[]
+  reports           Report[]
+  createdAt         DateTime           @default(now()) @map("created_at")
+  updatedAt         DateTime           @updatedAt @map("updated_at")
+
+  @@index([status])
+  @@index([categoryId])
+  @@index([state])
+  @@map("schemes")
+}
+
+model EligibilityRule {
+  id       String  @id @default(cuid())
+  schemeId String  @map("scheme_id")
+  scheme   Scheme  @relation(fields: [schemeId], references: [id], onDelete: Cascade)
+  field    String // age | income | state | gender | occupation | category
+  operator String // gte | lte | eq | in | between
+  value    String
+  required Boolean @default(true) // false = soft / "additional verification" flag
+
+  @@index([schemeId])
+  @@map("eligibility_rules")
+}
+
+model SchemeDocument {
+  id       String @id @default(cuid())
+  schemeId String @map("scheme_id")
+  scheme   Scheme @relation(fields: [schemeId], references: [id], onDelete: Cascade)
+  name     String
+  order    Int    @default(0)
+
+  @@map("scheme_documents")
+}
+
+model ApplicationStep {
+  id       String @id @default(cuid())
+  schemeId String @map("scheme_id")
+  scheme   Scheme @relation(fields: [schemeId], references: [id], onDelete: Cascade)
+  title    String
+  detail   String
+  order    Int    @default(0)
+
+  @@map("application_steps")
+}
+
+model SavedScheme {
+  id       String   @id @default(cuid())
+  userId   String   @map("user_id")
+  user     User     @relation(fields: [userId], references: [id])
+  schemeId String   @map("scheme_id")
+  scheme   Scheme   @relation(fields: [schemeId], references: [id])
+  savedAt  DateTime @default(now()) @map("saved_at")
+
+  @@unique([userId, schemeId])
+  @@map("saved_schemes")
+}
+
+model Feedback {
+  id        String   @id @default(cuid())
+  userId    String?  @map("user_id")
+  user      User?    @relation(fields: [userId], references: [id])
+  schemeId  String?  @map("scheme_id")
+  helpful   Boolean
+  comment   String?
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("feedback")
+}
+
+model Report {
+  id        String   @id @default(cuid())
+  userId    String?  @map("user_id")
+  user      User?    @relation(fields: [userId], references: [id])
+  schemeId  String   @map("scheme_id")
+  scheme    Scheme   @relation(fields: [schemeId], references: [id])
+  category  String // eligibility | benefit | broken_link | inactive | document | other
+  detail    String?
+  status    String   @default("open") // open | reviewed | resolved
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("reports")
+}

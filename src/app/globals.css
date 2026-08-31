@@ -1,0 +1,45 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Noto+Sans:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap");
+@import "tailwindcss";
+
+@theme {
+  /* Yojana Setu design tokens */
+  --color-navy: #0f2a4a;
+  --color-navy-light: #1c3f66;
+  --color-saffron: #e08d3c;
+  --color-green: #1f8a54;
+  --color-paper: #f7f6f2;
+  --color-ink: #16233a;
+  --color-border: #e1ddd3;
+  --color-muted: #6b7280;
+
+  --font-display: "Manrope", "Noto Sans Devanagari", ui-sans-serif, sans-serif;
+  --font-body: "Noto Sans", "Noto Sans Devanagari", ui-sans-serif, sans-serif;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-navy);
+    outline-offset: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
